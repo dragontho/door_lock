@@ -6,10 +6,22 @@ sudo apt install virtualenv
 virtualenv env
 source env/bin/activate
 pip3 install -r requirements.txt
-python3 camera.py
 ```
 
-### How to use the camera script
+### How to use the internet.py script
+The internet.py checks the internet connection before opening the door
+- Create a python script and copy the following snippet to the python script to run
+```
+from internet import *
+response = test_internet_connectivity()
+if response == 0:
+    print(hostname + " is up")
+else:
+    print(hostname + " is down")
+```
+
+### How to use the camera.py script
+The camera.py starts up the camera for 5 seconds and check if the face belongs to one of the owners.
 - Store all the owner faces in the images directory
 - Go to camera.py and update the dictionary constants_name to map the name of owner to image
 - Create a python script and ensure camera.py is on the directory level
