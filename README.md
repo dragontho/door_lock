@@ -44,4 +44,5 @@ else:
 - https://www.gadgetdaily.xyz/create-css3-folding-caption-effects/
 - https://www.pyimagesearch.com/2018/06/25/raspberry-pi-face-recognition/
 - https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
+- https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
 
