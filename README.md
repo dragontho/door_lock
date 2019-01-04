@@ -7,7 +7,6 @@
 - https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
 - https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65
 
-
 ### Setting up on Ubuntu 18 Desktop
 - Installing dependencies
 ```
@@ -17,6 +16,12 @@ source env/bin/activate
 pip3 install -r requirements.txt
 ```
 - Installing Pi Camera (https://www.youtube.com/watch?v=T8T6S5eFpqE)
+
+### How to use lock.py
+The lock.py controls the motors of the servo, PIR sensor, and push button.
+```
+- Still under construction -
+```
 
 ### How to use generator.py script
 The generator.py generates one time password. A qrcode is produced.
