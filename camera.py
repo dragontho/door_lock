@@ -61,7 +61,10 @@ class Camera:
 
             person_name = self.check_person()
             self.display_image(frame)
+
             self.quit()
+            if self.open_door:
+                cv2.imwrite("client.png", frame)
 
             end_time = time.time()
         return (person_name, self.open_door)
