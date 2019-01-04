@@ -1,12 +1,15 @@
 ## Door Lock with Facial Recognition
 
 ### Setting up
+- Installing dependencies
 ```
 sudo apt install virtualenv
 virtualenv env
 source env/bin/activate
 pip3 install -r requirements.txt
 ```
+- Installing Pi Camera (https://www.youtube.com/watch?v=T8T6S5eFpqE)
+
 
 ### How to use the scanner.py script
 The scanner.py checks whether the password tallys before opening the door
@@ -61,6 +64,7 @@ else:
 - https://www.pyimagesearch.com/2018/06/25/raspberry-pi-face-recognition/
 - https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
 - https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
+- https://www.youtube.com/watch?v=T8T6S5eFpqE
 
 ### Team Members
 - Brandon Ng https://github.com/nwjbrandon
