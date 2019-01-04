@@ -1,6 +1,14 @@
 ## Door Lock with Facial Recognition
 
-### Setting up
+### Setting up on Raspberry Pi
+- https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
+- https://www.hackster.io/mjrobot/automatic-vision-object-tracking-5575c4
+- https://www.hackster.io/mjrobot/pan-tilt-multi-servo-control-b67791
+- https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
+- https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65
+
+
+### Setting up on Ubuntu 18 Desktop
 - Installing dependencies
 ```
 sudo apt install virtualenv
