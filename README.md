@@ -18,6 +18,29 @@ pip3 install -r requirements.txt
 ```
 - Installing Pi Camera (https://www.youtube.com/watch?v=T8T6S5eFpqE)
 
+### How to use generator.py script
+The generator.py generates one time password. A qrcode is produced.
+- Create a python script and ensure generator.py is on the same directory level
+- Copy the following snippet to the python script to run
+```
+from generator import *
+token = mkpassword()
+print(token)
+create_qr_code(token)
+```
+
+### How to use the password.py script
+The password.py script sends the client.png and password.png to gmail. Email: islacchi.giftia@gmail.com Password: ubuntu123! (Expires on 20 Jan, 2019)
+- Create a python script and ensure password.py is on the same directory level
+- Copy the following snippet to the python script to run
+```
+from password import *
+print("sending email")
+owner = "Isla"
+send_password = Password(owner)
+send_password.run()
+print("email sent")
+```
 
 ### How to use the scanner.py script
 The scanner.py checks whether the password tallys before opening the door
