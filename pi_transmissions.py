@@ -1,5 +1,4 @@
 import socket
-import time
 
 class PI_Node:
 
@@ -39,6 +38,7 @@ class PI_Node:
             print("signal for motion not received")
 
 if __name__ == "__main__":
+    import time
     pi_node = PI_Node()
     pi_node.signal_door_state()
     time.sleep(1)

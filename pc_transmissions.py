@@ -1,5 +1,4 @@
 import socket
-import time
 
 class PC_Node:
 
@@ -39,6 +38,7 @@ class PC_Node:
         return int(motion_detected.decode('utf-8'))
 
 if __name__ == "__main__":
+    import time
     pc_node = PC_Node()
     pc_node.signal_door_state('1')
     pc_node.signal_motion()
