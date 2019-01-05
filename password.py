@@ -6,7 +6,8 @@ from email import encoders
 import os.path
 import time
 
-constants_known_owners = {"Isla": 'islachan.giftia@gmail.com'}
+constants_known_owners = {"Isla": 'islachan.giftia@gmail.com',
+                          "Brandon Ng": 'nwjbrandon@gmail.com'}
 
 email = 'islachan.giftia@gmail.com'
 password = 'ubuntu123!'

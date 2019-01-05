@@ -2,21 +2,23 @@ import RPi.GPIO as GPIO
 import time
 
 def initalize_pins():
-    pass
+    print("pins are initialized")
 
 def open_door():
-    pass
+    print("door is opening")
 
 def close_door():
-    pass
+    print("door is closing")
 
 def check_motion():
-    pass
+    print("motion detected")
+    return True
 
 def reset():
-    pass
+    print("reseting system")
 
 def pi_cleanup():
+    print("shutting down")
     GPIO.cleanup()
 
 if __name__ == "__main__":

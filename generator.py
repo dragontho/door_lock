@@ -1,5 +1,7 @@
 from random import choice
 import os
+import qrcode
+
 
 charsets = [
     'abcdefghijklmnopqrstuvwxyz',
@@ -17,8 +19,8 @@ def mkpassword(length=16):
     return "".join(pwd)
 
 def create_qr_code(token):
-    command = "qr '" + token + "' > password.png"
-    os.system(command)
+    img = qrcode.make(token)
+    img.save("./password.png")
 
 if __name__ == '__main__':
     token = mkpassword()

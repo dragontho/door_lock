@@ -4,9 +4,42 @@ from internet import *
 from lock import *
 from password import *
 from scanner import *
+import time
 
 def main():
-    pass
+    get_owner_image_encoding()
+    initalize_pins()
+    is_running = True
+    while is_running:
+        motion_detected = check_motion()
+        # if motion is detected, start the camera
+        if motion_detected:
+            camera = Camera()
+            open_door_data = camera.run()
+            owner = open_door_data[0]
+            is_owner_known = open_door_data[1]
+            del camera
+            # if owner is known, send qrcode otp to owner gmail
+            if is_owner_known:
+                token = mkpassword()
+                create_qr_code(token)
+                send_password = Password(owner)
+                send_password.run()
+                qrscanner = QRScanner(token)
+                is_password_verified = qrscanner.run()
+                del qrscanner
+                # if password is verified, open the door
+                if is_password_verified:
+                    open_door()
+                    start_time = time.time()
+                    end_time = time.time()
+                    # if door open more than 1 min, automatically close the door
+                    while end_time - start_time > 60:
+                        print("door is opened")
+                    close_door()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except:
+        pi_cleanup()
