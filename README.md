@@ -23,6 +23,27 @@ The lock.py controls the motors of the servo, PIR sensor, and push button.
 - Still under construction -
 ```
 
+### How to use pc_transmissions.py and pi_transmissions.py
+The pi and pc are connected through sockets to send signal to open door
+- Create two python scripts on the same directory level as pc_transmissions.py and pi_transmissions.py
+- Copy the following snippet to the python scripts to run
+- Run the script for pc first then script for pi
+```
+# pc script
+from pc_transmissions import *
+pc_node = PC_Node()
+pc_node.signal_door_state('1')
+pc_node.signal_motion()
+```
+```
+from pi_transmissions import *
+import time
+pi_node = PI_Node()
+pi_node.signal_door_state()
+time.sleep(1)
+pi_node.signal_motion("0")
+```
+
 ### How to use generator.py script
 The generator.py generates one time password. A qrcode is produced.
 - Create a python script and ensure generator.py is on the same directory level
@@ -94,6 +115,9 @@ else:
     print("door will not open")
 ```
 
+### Others
+- dev.py is for testing
+
 
 ### References
 - https://www.gadgetdaily.xyz/create-css3-folding-caption-effects/
@@ -101,6 +125,12 @@ else:
 - https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
 - https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
 - https://www.youtube.com/watch?v=T8T6S5eFpqE
+- https://nitratine.net/blog/post/how-to-send-an-email-with-python/?utm_source=pythonanywhere&utm_medium=redirect&utm_campaign=pythonanywhere_organic_redirect
+- http://code.activestate.com/recipes/578169-extremely-strong-password-generator/
+- https://realpython.com/python-sockets/
+- https://realpython.com/python-sockets/
+- https://stackabuse.com/basic-socket-programming-in-python/
+- https://pythonspot.com/python-network-sockets-programming-tutorial/
 
 ### Team Members
 - Brandon Ng https://github.com/nwjbrandon

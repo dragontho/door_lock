@@ -1,14 +1,13 @@
 from camera import *
 from generator import *
 from internet import *
-from lock import *
 from password import *
 from scanner import *
 import time
+import keyboard
 
 def main():
     get_owner_image_encoding()
-    initalize_pins()
     is_running = True
     while is_running:
         motion_detected = check_motion()
@@ -30,13 +29,14 @@ def main():
                 del qrscanner
                 # if password is verified, open the door
                 if is_password_verified:
-                    open_door()
+                    print("send signal to open door")
                     start_time = time.time()
                     end_time = time.time()
                     # if door open more than 1 min, automatically close the door
                     while end_time - start_time > 60:
-                        print("door is opened")
-                    close_door()
+                        if keyboard.is_pressed('q'):
+                            break
+                    print("send signal to close door")
 
 if __name__ == "__main__":
     try:

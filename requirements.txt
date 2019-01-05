@@ -1,4 +1,5 @@
-opencv-python==3.4.5.20
-face-recognition==1.2.3
-pyzbar==0.1.7
-imutils==0.5.2
+opencv-python
+face-recognition
+pyzbar
+imutils
+
