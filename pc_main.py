@@ -4,22 +4,38 @@ from internet import *
 from password import *
 from scanner import *
 import time
-import keyboard
 from pc_transmissions import *
 from internet import *
 
 def main():
+    # setting up necessary packages
     get_owner_image_encoding()
     pc_node = PC_Node()
+
     is_running = True
     while is_running:
+
         # if motion is detected, start the camera
-        if pc_node.signal_motion():
+        motion_signal_stuck = True
+        motion_detected = False
+        while motion_signal_stuck:
+            try:
+                motion_detected = pc_node.signal_motion()
+                motion_signal_stuck = False
+            except ConnectionRefusedError:
+                time.sleep(0.5)
+                print("Connecting to pi server 1")
+            except OSError:
+                time.sleep(0.5)
+                print("Connecting to pi server 1")
+
+        if motion_detected:
             camera = Camera()
             open_door_data = camera.run()
             owner = open_door_data[0]
             is_owner_known = open_door_data[1]
             del camera
+
             # if owner is known, send qrcode otp to owner gmail
             if is_owner_known:
                 token = mkpassword()
@@ -29,22 +45,33 @@ def main():
                 qrscanner = QRScanner(token)
                 is_password_verified = qrscanner.run()
                 del qrscanner
+
                 # if password is verified, open the door
-                time.sleep(1)
                 if is_password_verified:
+                    door_signal_stuck = True
                     print("send signal to open door")
-                    try:
-                        pc_node.signal_door_state("1")
-                        start_time = time.time()
+                    while door_signal_stuck:
+                        try:
+                            pc_node.signal_door_state("1")
+                            door_signal_stuck = False
+                        except ConnectionRefusedError:
+                            time.sleep(0.5)
+                            print("Connecting to pi server 2")
+                    start_time = time.time()
+                    end_time = time.time()
+
+                    # if door open more than 1 min, automatically close the door
+                    while end_time - start_time < 30:
                         end_time = time.time()
-                        # if door open more than 1 min, automatically close the door
-                        while end_time - start_time > 60:
-                            if keyboard.is_pressed('q'):
-                                break
-                        print("send signal to close door")
-                        pc_node.signal_door_state("0")
-                    except ConnectionRefusedError:
-                        print("Did you ensure the pi server is up?")
+                    print("send signal to close door")
+                    door_signal_stuck = True
+                    while door_signal_stuck:
+                        try:
+                            pc_node.signal_door_state("0")
+                            door_signal_stuck = False
+                        except ConnectionRefusedError:
+                            time.sleep(0.5)
+                            print("Connecting to pi server 3")
 
 if __name__ == "__main__":
     response = test_internet_connectivity()
