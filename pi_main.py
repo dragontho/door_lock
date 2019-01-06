@@ -28,18 +28,18 @@ def main():
                     time.sleep(0.5)
                     print("Connecting to pc server 1")
 
-            # received signal of door state
-            door_signal_stuck = True
-            door_state = 0
-            while door_signal_stuck:
+            verified_signal_stuck = True
+            is_verified = False
+            while verified_signal_stuck:
                 try:
-                    door_state = pi_node.signal_door_state()
-                    door_signal_stuck = False
+                    is_verified = pi_node.is_owner_face_and_password_verified()
+                    verified_signal_stuck = False
                 except ConnectionRefusedError:
                     time.sleep(0.5)
                     print("Connecting to pc server 2")
-            if door_state:
-                open_door()
+
+            if is_verified:
+                # received signal of door state
                 door_signal_stuck = True
                 door_state = 0
                 while door_signal_stuck:
@@ -49,10 +49,21 @@ def main():
                     except ConnectionRefusedError:
                         time.sleep(0.5)
                         print("Connecting to pc server 3")
-                if not door_state:
+                if door_state:
+                    open_door()
+                    door_signal_stuck = True
+                    door_state = 0
+                    while door_signal_stuck:
+                        try:
+                            door_state = pi_node.signal_door_state()
+                            door_signal_stuck = False
+                        except ConnectionRefusedError:
+                            time.sleep(0.5)
+                            print("Connecting to pc server 4")
+                    if not door_state:
+                        close_door()
+                else:
                     close_door()
-            else:
-                close_door()
 
 if __name__ == "__main__":
     response = test_internet_connectivity()

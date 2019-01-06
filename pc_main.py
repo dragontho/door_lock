@@ -46,6 +46,15 @@ def main():
                 is_password_verified = qrscanner.run()
                 del qrscanner
 
+                verified_signal_stuck = True
+                while verified_signal_stuck:
+                    try:
+                        pc_node.is_owner_face_and_password_verified(is_owner_known, is_password_verified)
+                        verified_signal_stuck = False
+                    except ConnectionRefusedError:
+                        time.sleep(0.5)
+                        print("Connecting to pi server 2")
+
                 # if password is verified, open the door
                 if is_password_verified:
                     door_signal_stuck = True
@@ -56,7 +65,7 @@ def main():
                             door_signal_stuck = False
                         except ConnectionRefusedError:
                             time.sleep(0.5)
-                            print("Connecting to pi server 2")
+                            print("Connecting to pi server 3")
                     start_time = time.time()
                     end_time = time.time()
 
@@ -71,7 +80,16 @@ def main():
                             door_signal_stuck = False
                         except ConnectionRefusedError:
                             time.sleep(0.5)
-                            print("Connecting to pi server 3")
+                            print("Connecting to pi server 4")
+            else:
+                verified_signal_stuck = True
+                while verified_signal_stuck:
+                    try:
+                        pc_node.is_owner_face_and_password_verified(False, False)
+                        verified_signal_stuck = False
+                    except ConnectionRefusedError:
+                        time.sleep(0.5)
+                        print("Connecting to pi server 2")
 
 if __name__ == "__main__":
     response = test_internet_connectivity()

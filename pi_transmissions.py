@@ -10,6 +10,22 @@ class PI_Node:
         self.pc_port = 65432
         print("pc server node targeted at %s:%s" % (self.pc_server, self.pc_port))
 
+    def is_owner_face_and_password_verified(self):
+        # pc is client and pi is server
+        verified = 0
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind((self.pc_server, self.pc_port))
+            s.listen()
+            conn, addr = s.accept()
+            with conn:
+                while True:
+                    data = conn.recv(1024)
+                    if not data:
+                        break
+                    verified = data
+                    conn.sendall(data)
+        return int(verified.decode('utf-8'))
+
     def signal_door_state(self):
         # pc is client and pi is server
         door_state = 0
