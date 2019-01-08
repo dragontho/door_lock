@@ -20,6 +20,7 @@ pip3 install -r requirements.txt
 ```
 source ./.profile
 workon cv
+export PYTHONPATH=$PYTHONPATH=/usr/lib/python3.5/dist-packages:/usr/local/lib/python3.5/dist-packages:/usr/lib/python3/dist-packages
 cd ./code_for_pi
 python3 main.py
 ```

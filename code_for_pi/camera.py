@@ -4,6 +4,9 @@ import os
 import time
 from constants import *
 from internet import *
+import numpy as np
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 # image encoding of person
 constants_known_face_encoding = []
@@ -53,7 +56,7 @@ class Camera:
                     name = constants_known_face_names[first_match_index]
 
                 self.face_names.append(name)
-            for (top, right, bottom, left), name in zip(face_locations, face_names):
+            for (top, right, bottom, left), name in zip(self.face_locations, self.face_names):
                 top *= 1
                 right *= 1
                 bottom *= 1
@@ -63,11 +66,11 @@ class Camera:
                 font = cv2.FONT_HERSHEY_DUPLEX
                 cv2.putText(image, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
             cv2.imshow("Facial Recognition", image)
-            rawCapture.truncate(0)
+            self.rawCapture.truncate(0)
             self.quit()
             person_name = self.check_person()
             end_time = time.time()
-            if (self.open_door or (end_time - start_time > 60)):
+            if (self.open_door or (end_time - start_time > 30)):
                 break
 
         return (person_name, self.open_door)
@@ -86,6 +89,7 @@ class Camera:
 
     def __del__(self):
         print("Closing camera")
+        self.camera.close()
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":

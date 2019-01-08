@@ -51,6 +51,7 @@ class QRScanner:
 
     def __del__(self):
         print("Close camera")
+        self.camera.close()
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
