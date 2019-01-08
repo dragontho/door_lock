@@ -34,7 +34,7 @@ class QRScanner:
             self.rawCapture.truncate(0)
             self.quit()
             end_time = time.time()
-            if (self.open_door or (end_time - start_time > 60)):
+            if (self.open_door or (end_time - start_time > 30)):
                 break
 
         return self.open_door

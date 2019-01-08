@@ -70,9 +70,12 @@ class Camera:
             self.quit()
             person_name = self.check_person()
             end_time = time.time()
-            if (self.open_door or (end_time - start_time > 30)):
+            if self.open_door:
+                self.camera.capture("./client.png")
                 break
-
+            if end_time - start_time > 30:
+                break
+            
         return (person_name, self.open_door)
 
     def check_person(self):
