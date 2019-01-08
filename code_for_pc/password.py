@@ -5,9 +5,9 @@ from email.mime.base import MIMEBase
 from email import encoders
 import os.path
 import time
+from constants import *
+from internet import *
 
-constants_known_owners = {"Isla": 'islachan.giftia@gmail.com',
-                          "Brandon Ng": 'nwjbrandon@gmail.com'}
 
 email = 'islachan.giftia@gmail.com'
 password = 'ubuntu123!'
@@ -60,11 +60,16 @@ class Password:
         server.quit()
 
 if __name__ == "__main__":
-    print("sending email")
-    owner = "Isla"
-    send_password = Password(owner)
-    send_password.run()
-    print("email sent")
+    response =  test_internet_connectivity()
+    if response == 0:
+        print("internet connection is up")
+        print("sending email")
+        owner = "Isla"
+        send_password = Password(owner)
+        send_password.run()
+        print("email sent")
+    else:
+        print("internet is down")
 
 
 

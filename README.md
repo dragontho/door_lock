@@ -1,47 +1,47 @@
 ## Door Lock with Facial Recognition
 
-### Setting up on Raspberry Pi
-- https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
-- https://www.hackster.io/mjrobot/automatic-vision-object-tracking-5575c4
-- https://www.hackster.io/mjrobot/pan-tilt-multi-servo-control-b67791
-- https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
-- https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65
+### Project Description
+The door is designed to open when the owner's face and one-time password is verified. When the PIR 
+sensor detects a person is approaching, the camera turns on. If the owner's face is recognized, a 
+password is generated and sent to the owner's gmail in QR code to scan. The camera does the 
+verfication real-time. The servo turns, and the door opens for the owner to enter
 
-### Setting up on Ubuntu 18 Desktop
-- Installing dependencies
+
+### Running the code on Raspberry Pi
+- Follow the instructions below
+    - https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
+    - https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65
+- Install Python Pacakages
+```
+pip3 install -r requirements.txt
+```
+- Set the path variable that connects the virtual environment to the system's python packages 
+- To run the python scripts
+```
+source ./.profile
+workon cv
+cd ./code_for_pi
+python3 main.py
+```
+
+### Running the code on Ubuntu 18
+- Install Python Pacakages
 ```
 sudo apt install virtualenv
 virtualenv env
 source env/bin/activate
 pip3 install -r requirements.txt
 ```
-- Installing Pi Camera (https://www.youtube.com/watch?v=T8T6S5eFpqE)
+- To run the python scripts
+```
+cd ./code_for_pc
+python3 main.py
+```
 
 ### How to use lock.py
 The lock.py controls the motors of the servo, PIR sensor, and push button.
 ```
 - Still under construction -
-```
-
-### How to use pc_transmissions.py and pi_transmissions.py
-The pi and pc are connected through sockets to send signal to open door
-- Create two python scripts on the same directory level as pc_transmissions.py and pi_transmissions.py
-- Copy the following snippet to the python scripts to run
-- Run the script for pc first then script for pi
-```
-# pc script
-from pc_transmissions import *
-pc_node = PC_Node()
-pc_node.signal_door_state('1')
-pc_node.signal_motion()
-```
-```
-from pi_transmissions import *
-import time
-pi_node = PI_Node()
-pi_node.signal_door_state()
-time.sleep(1)
-pi_node.signal_motion("0")
 ```
 
 ### How to use generator.py script
@@ -104,10 +104,9 @@ The camera.py starts up the camera for 5 seconds and check if the face belongs t
 - Copy the following snippet to the python script and run
 ```
 from camera import *
-get_owner_image_encoding()                  # get the image encoding of the owners
-camera = Camera()                           # create an instance of the variable
-open_door_data = camera.run()               # return a tuple - the first is the name of the owner 
-                                            # and second is a boolean whether the door should be open 
+get_owner_image_encoding()                  
+camera = Camera()                          
+open_door_data = camera.run()              
 if open_door_data[1]:
     print("door is opening")
     print("Welcome " + open_door_data[0])
@@ -115,14 +114,9 @@ else:
     print("door will not open")
 ```
 
-### Others
-- dev.py is for testing
-
-
 ### References
 - https://www.gadgetdaily.xyz/create-css3-folding-caption-effects/
 - https://www.pyimagesearch.com/2018/06/25/raspberry-pi-face-recognition/
-- https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
 - https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
 - https://www.youtube.com/watch?v=T8T6S5eFpqE
 - https://nitratine.net/blog/post/how-to-send-an-email-with-python/?utm_source=pythonanywhere&utm_medium=redirect&utm_campaign=pythonanywhere_organic_redirect
@@ -131,6 +125,9 @@ else:
 - https://realpython.com/python-sockets/
 - https://stackabuse.com/basic-socket-programming-in-python/
 - https://pythonspot.com/python-network-sockets-programming-tutorial/
+- https://www.hackster.io/mjrobot/real-time-face-recognition-an-end-to-end-project-a10826
+- https://www.hackster.io/mjrobot/automatic-vision-object-tracking-5575c4
+- https://www.hackster.io/mjrobot/pan-tilt-multi-servo-control-b67791
 
 ### Team Members
 - Brandon Ng https://github.com/nwjbrandon

@@ -1,13 +1,16 @@
-from imutils.video import VideoStream
-from pyzbar.pyzbar import decode
-import imutils
-import cv2
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 import time
-
+import cv2
+from pyzbar.pyzbar import decode
+ 
 class QRScanner:
 
     def __init__(self, password):
-        self.vs = VideoStream().start()
+        self.camera = PiCamera()
+        self.camera.resolution = (640, 480)
+        self.camera.framerate = 32
+        self.rawCapture = PiRGBArray(self.camera, size=(640, 480))
         self.is_running = True
         self.open_door = False
         self.password = password
@@ -15,30 +18,24 @@ class QRScanner:
     def run(self):
         start_time = time.time()
         end_time = time.time()
-
-        while self.is_running and end_time - start_time < 300:
-            frame = self.vs.read()
-            frame = imutils.resize(frame, width=400)
-            barcodes = decode(frame)
+        for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+            image = frame.array
+            barcodes = decode(image)
             for barcode in barcodes:
                 (x, y, w, h) = barcode.rect
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
                 barcodeData = barcode.data.decode("utf-8")
                 barcodeType = barcode.type
-
                 text = "{} ({})".format(barcodeData, barcodeType)
-                cv2.putText(frame, text, (x, y - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-
-                self.qr_decode_msg = barcodeData
-
+                cv2.putText(image, text, (x, y - 10),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
                 self.verify_data(barcodeData)
-
-            cv2.imshow("Barcode Scanner", frame)
+            cv2.imshow("QRCode Scanner", image)
+            self.rawCapture.truncate(0)
             self.quit()
-
             end_time = time.time()
+            if (self.open_door or (end_time - start_time > 60)):
+                break
 
         return self.open_door
 
@@ -52,10 +49,9 @@ class QRScanner:
         if key == ord("q"):
             self.is_running = False
 
-
     def __del__(self):
+        print("Close camera")
         cv2.destroyAllWindows()
-        self.vs.stop()
 
 if __name__ == "__main__":
     password = "1234567890"

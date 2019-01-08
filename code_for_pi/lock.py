@@ -1,3 +1,6 @@
+import RPi.GPIO as GPIO
+import time
+
 def initalize_pins():
     print("pins are initialized")
 
@@ -8,11 +11,11 @@ def close_door():
     print("door is closing")
 
 def check_motion():
-    print("motion detected")
-    return True
-
-def reset():
-    print("reseting system")
+    user_input = input("motion detected? Enter 'y' for yes")
+    if user_input == 'y' or user_input == 'Y':
+        return True
+    else:
+        return False
 
 def pi_cleanup():
     print("shutting down")

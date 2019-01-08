@@ -2,13 +2,9 @@ import face_recognition
 import cv2
 import os
 import time
+from constants import *
+from internet import *
 
-# name of the person in the image
-constants_name = {
-        "brandon.jpg": "Brandon Ng",
-        "obama.jpg": "Obama",
-        "biden.jpg": "Biden",
-        }
 # image encoding of person
 constants_known_face_encoding = []
 # name of person
@@ -16,7 +12,7 @@ constants_known_face_names = []
 
 # get encodings of the images of person
 def get_owner_image_encoding():
-    print("processing images")
+    print("processing images of owner")
     list_of_images = os.listdir("images")
     for image in list_of_images:
         load_name = constants_name[image]
@@ -24,16 +20,16 @@ def get_owner_image_encoding():
         image_encoding = face_recognition.face_encodings(load_image)[0]
         constants_known_face_encoding.append(image_encoding)
         constants_known_face_names.append(load_name)
-    print("finished processing images")
+    print("finished processing images of owners")
 
 # start the camera
 class Camera:
 
     def __init__(self):
-        print("Starting camera")
+        print("Starting camera for facial recognition")
         self.video_capture = cv2.VideoCapture(0)
         self.face_locations = []
-        self.face_encoding = []
+        self.face_encodings = []
         self.face_names = []
         self.process_this_frame = True
         self.is_running = True
@@ -44,7 +40,7 @@ class Camera:
         start_time = time.time()
         end_time = time.time()
 
-        while self.is_running and end_time - start_time < 5:
+        while self.is_running and end_time - start_time < 10:
             # get a single frame of video
             ret, frame = self.video_capture.read()
 
@@ -114,10 +110,10 @@ class Camera:
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
         # display the resulting image
-        cv2.imshow('Video', frame)
+        cv2.imshow('Facial Recognition', frame)
 
     def quit(self):
-        # hit 'q' on the keyboard to quit!
+        # hit 'q' on the keyboard to quit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             self.is_running = False
 
@@ -127,11 +123,16 @@ class Camera:
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    get_owner_image_encoding()
-    camera = Camera()
-    open_door_data = camera.run()
-    if open_door_data[1]:
-        print("door is opening")
-        print("Welcome " + open_door_data[0])
+    response =  test_internet_connectivity()
+    if response == 0:
+        print("internet connection is up")
+        get_owner_image_encoding()
+        camera = Camera()
+        open_door_data = camera.run()
+        if open_door_data[1]:
+            print("door is opening")
+            print("Welcome " + open_door_data[0])
+        else:
+            print("door will not open")
     else:
-        print("door will not open")
+        print("internet connection is down")
