@@ -1,7 +1,7 @@
 ## Door Lock with Facial Recognition
 
 ### Project Description
-The door is designed to open when the owner's face and one-time password is verified. When the PIR 
+The door is designed to open when the owner's face and one-time password is verified. When the ultrasound 
 sensor detects a person is approaching, the camera turns on. If the owner's face is recognized, a 
 password is generated and sent to the owner's gmail in QR code to scan. The camera does the 
 verfication real-time. The servo turns, and the door opens for the owner to enter
@@ -39,12 +39,15 @@ python3 main.py
 ```
 
 ### How to use lock.py
-The lock.py controls the motors of the servo, PIR sensor, and push button.
-- Make connections to pins
+The lock.py controls the motors of the servo, ultrasound sensor, and push button.
+- Make connections to pins on raspberry pi
     - Motor: 7
     - LED 1: 13
     - LED 2: 15
     - PIR Sensor: 37
+- Make connections to pins on arduino
+    - Trigger: 7
+    - Echo: 6
 ```
 python3 lock.py
 ```
