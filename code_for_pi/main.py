@@ -10,14 +10,15 @@ from lock import *
 
 def main():
     # setting up necessary packages
-    initalize_pins()
+    rpi = RPI()
+    rpi.close_door()
     get_owner_image_encoding()
 
     is_running = True
     while is_running:
 
         # if motion is detected, start the camera
-        if check_motion():
+        if rpi.check_motion():
             camera = Camera()
             open_door_data = camera.run()
             owner = open_door_data[0]
@@ -38,15 +39,16 @@ def main():
 
                 # if password is verified, open the door
                 if is_password_verified:
-                    open_door()
+                    rpi.open_door()
                     time.sleep(10)
-                    close_door()
+                    rpi.close_door()
                 else:
-                    close_door()
+                    rpi.close_door()
             else:
-                close_door()
+                rpi.close_door()
 
 if __name__ == "__main__":
+    main()
     response = test_internet_connectivity()
     if response == 0:
         print("Welcome to my Door Assistant")
