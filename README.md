@@ -7,6 +7,13 @@ password is generated and sent to the owner's gmail in QR code to scan. The came
 verfication real-time. The servo turns, and the door opens for the owner to enter
 
 
+###GPIO PINS to input:
+Motor: 7
+LED 1: 13
+LED 2: 15
+PIR Sensor: 37
+
+
 ### Running the code on Raspberry Pi
 - Follow the instructions below
     - https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
