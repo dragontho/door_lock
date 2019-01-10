@@ -6,14 +6,6 @@ sensor detects a person is approaching, the camera turns on. If the owner's face
 password is generated and sent to the owner's gmail in QR code to scan. The camera does the 
 verfication real-time. The servo turns, and the door opens for the owner to enter
 
-
-###GPIO PINS to input:
-Motor: 7
-LED 1: 13
-LED 2: 15
-PIR Sensor: 37
-
-
 ### Running the code on Raspberry Pi
 - Follow the instructions below
     - https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
@@ -48,8 +40,13 @@ python3 main.py
 
 ### How to use lock.py
 The lock.py controls the motors of the servo, PIR sensor, and push button.
+- Make connections to pins
+    - Motor: 7
+    - LED 1: 13
+    - LED 2: 15
+    - PIR Sensor: 37
 ```
-- Still under construction -
+python3 lock.py
 ```
 
 ### How to use generator.py script

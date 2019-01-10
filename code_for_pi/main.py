@@ -42,13 +42,15 @@ def main():
                     rpi.open_door()
                     time.sleep(10)
                     rpi.close_door()
+                    rpi.warm_up()
                 else:
                     rpi.close_door()
+                    rpi.warm_up()
             else:
                 rpi.close_door()
+                rpi.warm_up()
 
 if __name__ == "__main__":
-    main()
     response = test_internet_connectivity()
     if response == 0:
         print("Welcome to my Door Assistant")
