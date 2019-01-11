@@ -11,6 +11,7 @@ from lock import *
 def main():
     # setting up necessary packages
     rpi = RPI()
+    rpi.warm_up()
     rpi.close_door()
     get_owner_image_encoding()
 
